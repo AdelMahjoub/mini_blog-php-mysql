@@ -14,6 +14,7 @@
     <ul class="nav navbar-nav">
       <li><a href='index.php'>ACCUEIL</a></li>
       <?= $navbarLinks ?>
+      <li><a href="https://github.com/AdelMahjoub/mini_blog-php-mysql">GITHUB</a></li>
     </ul>
   </div>
 </nav><!-- END OF NAVBAR -->
