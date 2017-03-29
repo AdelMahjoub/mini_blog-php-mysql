@@ -26,7 +26,7 @@ $pages = ceil($nbreArticles / $articlesParPage);
 $currentPage = 1;
 
 if(isset($_GET['page']) && !empty($_GET['page'])) {
-  $currentPage = (int)sanitize($_GET['page']);
+  $currentPage = abs((int)sanitize($_GET['page']));
 }
 
 $start = ($currentPage - 1) * $articlesParPage;
