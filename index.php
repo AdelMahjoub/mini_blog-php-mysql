@@ -23,7 +23,7 @@ if(!array_key_exists('username', $_SESSION)) {
 $articlesParPage = 5;
 $nbreArticles = getTotalArticlesCount($bdd);
 $pages = ceil($nbreArticles / $articlesParPage); 
-$currentPage = 0;
+$currentPage = 1;
 
 if(isset($_GET['page']) && !empty($_GET['page'])) {
   $currentPage = (int)sanitize($_GET['page']);
