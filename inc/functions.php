@@ -134,4 +134,11 @@ function getUserData($bdd, $username) {
   return $user;
 }
 
+// Nombre total d'articles
+function getTotalArticlesCount($bdd) {
+  $req = $bdd->query("SELECT COUNT(*) AS nbre_articles FROM Mini_Blog_Billets");
+  $row = $req->fetch();
+  return $row['nbre_articles'];
+}
+
 ?>

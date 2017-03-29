@@ -18,6 +18,21 @@ if(!array_key_exists('username', $_SESSION)) {
   <li><a href='logout.php'>SE DECONNECTER</a></li>";
 }
 
+
+// Système de pagination
+$articlesParPage = 5;
+$nbreArticles = getTotalArticlesCount($bdd);
+$pages = ceil($nbreArticles / $articlesParPage); 
+$currentPage = 0;
+
+if(isset($_GET['page']) && !empty($_GET['page'])) {
+  $currentPage = (int)sanitize($_GET['page']);
+}
+
+$start = ($currentPage - 1) * $articlesParPage;
+$previousPage = max(1, $currentPage - 1);
+$nextPage = min($pages, $currentPage + 1)
+
 ?>
 <!-- HEADER -->
 <?php include_once 'inc/header.php'; ?>
@@ -27,7 +42,7 @@ if(!array_key_exists('username', $_SESSION)) {
   <div class="col-md-12">
     
     <?php
-    $req = $bdd->query("SELECT id, Auteur AS auteur, Titre AS titre, Contenu AS contenu, DATE_FORMAT(Date_creation, '%d/%m/%Y') AS added FROM Mini_Blog_Billets ORDER BY id DESC");
+    $req = $bdd->query("SELECT id, Auteur AS auteur, Titre AS titre, Contenu AS contenu, DATE_FORMAT(Date_creation, '%d/%m/%Y') AS added FROM Mini_Blog_Billets ORDER BY id DESC LIMIT $start, $articlesParPage");
     ?>
 
     <?php while($row = $req->fetch()): ?>
@@ -63,6 +78,23 @@ if(!array_key_exists('username', $_SESSION)) {
   </div>
 </div>
 <!-- FIN DES ARTICLE -->
+
+<!-- PAGINATION -->
+<div class="row">
+  <div class="col-md-12 text-center">
+    <ul class="pagination">
+      <li><a <?= "href='{$_SERVER['PHP_SELF']}?page={$previousPage}'" ?>>&laquo;</a></li>
+      <?php
+        for ($i=0; $i < $pages; $i++) {
+          $index = $i + 1;
+          echo "<li><a href='{$_SERVER['PHP_SELF']}?page={$index}'>{$index}</a></li>";
+        }
+      ?>
+      <li><a <?= "href='{$_SERVER['PHP_SELF']}?page={$nextPage}'" ?>>&raquo;</a></li>
+    </ul>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-md-2">
     <a href="article.php" class="btn btn-primary">Nouvel article</a>
